@@ -8,9 +8,21 @@ const settings = {
 		authorization: "Client-ID d957cd89bbfd69b"
 	}
 };
+const inf = e => {
+	// infinity scroll
+	console.log("pageYOffset: ", window.pageYOffset); // current height
+	console.log("scrollTop: ", document.documentElement.scrollTop); // current height
+	console.log("clientHeight: ", document.documentElement.clientHeight); // height of window (actually document)
+	console.log("scrollHeight: ", document.documentElement.scrollHeight); // height of scroll area
+	console.log("-------------------------------"); // :) have fun
+};
 class App extends Component {
 	state = { data: [], perPage: 50, currentPage: 0 };
+	componentDidMount() {
+		window.addEventListener("scroll", inf);
+	}
 	componentWillMount() {
+		window.removeEventListener("scroll", inf);
 		axios
 			.get(url, settings)
 			.then(response => {
