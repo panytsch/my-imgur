@@ -1,11 +1,15 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
-
-function reducer1(state = [], action) {
+const init = {
+  data: [],
+  currentPage: 1
+};
+function galerryList(state = init, action) {
   switch (action.type) {
-    case "CLICK":
-      return [...state, action.payload];
+    case "FETCH_DATA_SUCCESS":
+      state.data = state.data.concat(action.payload);
+      return { ...state };
     default:
       return state;
   }
@@ -20,7 +24,7 @@ function reducer2(state = [], action) {
   }
 }
 
-const reducers = combineReducers({ reducer1, reducer2 });
+const reducers = combineReducers({ galerryList, reducer2 });
 
 const store = createStore(
   reducers,
