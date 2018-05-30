@@ -14,15 +14,6 @@ const mainStyle = css({
 });
 
 class MainList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.infinityScroll.bind(this);
-    this.state = {
-      perPage: 40
-    };
-    this.currentKey = 0;
-  }
-
   componentWillMount() {
     window.removeEventListener("scroll", this.infinityScroll);
     this.fetchData();
@@ -31,12 +22,12 @@ class MainList extends React.Component {
     window.addEventListener("scroll", this.infinityScroll);
   }
   fetchData() {
+    let { page, section, sort, __window } = this.props.filters;
     axios
-      .get(conf.url(this.currentKey), conf.options)
+      .get(conf.url(page, section, sort, __window), conf.options)
       .then(response => {
         let res = response.data.data;
         this.props.fetchDataRedux(res);
-        ++this.currentKey;
         console.log(res);
       })
       .catch(function(error) {
@@ -49,12 +40,6 @@ class MainList extends React.Component {
     let condition =
       height + document.documentElement.clientHeight >=
       document.documentElement.scrollHeight;
-
-    // console.log("pageYOffset: ", window.pageYOffset); // current height
-    // console.log("scrollTop: ", document.documentElement.scrollTop); // current height
-    // console.log("clientHeight: ", document.documentElement.clientHeight); // height of window (actually document)
-    // console.log("scrollHeight: ", document.documentElement.scrollHeight); // height of scroll area
-    // console.log("-------------------------------"); // :) have fun
     console.log(condition);
   }
   render() {
@@ -81,7 +66,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   datas: state.galerryList.data,
-  currentPage: state.galerryList.currentPage
+  filters: state.galeryFilters
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

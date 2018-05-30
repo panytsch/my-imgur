@@ -2,8 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 const init = {
-  data: [],
-  currentPage: 1
+  data: []
 };
 function galerryList(state = init, action) {
   switch (action.type) {
@@ -15,7 +14,15 @@ function galerryList(state = init, action) {
   }
 }
 
-function reducer2(state = [], action) {
+function galeryFilters(
+  state = {
+    section: "hot",
+    sort: "top",
+    page: 0,
+    __window: "day"
+  },
+  action
+) {
   switch (action.type) {
     case "CLICK_2":
       return [...state, action.text];
@@ -24,7 +31,7 @@ function reducer2(state = [], action) {
   }
 }
 
-const reducers = combineReducers({ galerryList, reducer2 });
+const reducers = combineReducers({ galerryList, galeryFilters });
 
 const store = createStore(
   reducers,

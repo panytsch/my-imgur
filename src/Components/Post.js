@@ -9,10 +9,6 @@ const postStyle = css({
 });
 
 class Post extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { post } = this.props;
     return (
