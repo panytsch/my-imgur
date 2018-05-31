@@ -11,6 +11,7 @@ ReactDOM.render(
     <Router>
       <div>
         <Route exact path="/" component={MainList} />
+        <Route path="/posts/:id" />
       </div>
     </Router>
   </Provider>,
