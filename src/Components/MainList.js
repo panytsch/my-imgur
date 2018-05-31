@@ -17,7 +17,7 @@ class MainList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      perPage: 10,
+      perPage: 11,
       page: 1
     };
   }
@@ -51,7 +51,6 @@ class MainList extends React.Component {
     let condition =
       height + document.documentElement.clientHeight >=
       document.documentElement.scrollHeight;
-    console.log(this.state);
     if (condition) {
       let page = this.state.page + 1;
       this.setState(
@@ -59,15 +58,24 @@ class MainList extends React.Component {
           page: page
         })
       );
+      let { filters, changeFilters, datas } = this.props;
+      let reduxPage = filters.page + 1;
+      if (this.state.page * this.state.perPage >= datas.length) {
+        changeFilters(Object.assign(filters, { page: reduxPage }));
+        this.fetchData();
+      }
+      console.log(this.state);
     }
     console.log(condition);
   }
   render() {
+    let currentData = this.props.datas.slice(
+      0,
+      this.state.page * this.state.perPage
+    );
     return (
       <div className={mainStyle}>
-        {this.props.datas
-          .slice(0, this.state.page * this.state.perPage)
-          .map(i => <Post post={i} key={i.id} />)}
+        {currentData.map(i => <Post post={i} key={i.id} />)}
       </div>
     );
   }
@@ -78,6 +86,12 @@ const mapDispatchToProps = dispatch => ({
     return dispatch({
       type: "FETCH_DATA_SUCCESS",
       payload: data
+    });
+  },
+  changeFilters: data => {
+    return dispatch({
+      type: "CHANGE_FILTER",
+      filters: data
     });
   }
 });

@@ -24,8 +24,9 @@ function galeryFilters(
   action
 ) {
   switch (action.type) {
-    case "CLICK_2":
-      return [...state, action.text];
+    case "CHANGE_FILTER":
+      state = Object.assign(state, action.filters);
+      return { ...state };
     default:
       return state;
   }
