@@ -7,14 +7,14 @@ import MainList from "./Components/MainList";
 import store from "./Store/store";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router>
-      <div>
-        <Route exact path="/" component={MainList} />
-        <Route path="/posts/:id" />
-      </div>
-    </Router>
-  </Provider>,
-  document.getElementById("root")
+	<Provider store={store}>
+		<Router>
+			<div style={{ font: "2vh Arial, sans-serif" }}>
+				<Route exact path="/" component={MainList} />
+				<Route path="/posts/:id" />
+			</div>
+		</Router>
+	</Provider>,
+	document.getElementById("root")
 );
 registerServiceWorker();
