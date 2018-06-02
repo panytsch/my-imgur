@@ -25,7 +25,9 @@ class MainList extends React.Component {
 		window.removeEventListener("scroll", this.infinityScroll.bind(this));
 	}
 	componentWillMount() {
-		this.fetchData();
+		if (!this.props.datas.length) {
+			this.fetchData();
+		}
 	}
 	componentDidMount() {
 		window.addEventListener("scroll", this.infinityScroll.bind(this));
@@ -36,7 +38,10 @@ class MainList extends React.Component {
 		axios
 			.get(conf.url(page, section, sort, __window), conf.options)
 			.then(response => {
-				let res = response.data.data;
+				let res = response.data.data.filter(
+					i =>
+						i.images && i.images[0] && i.images[0].type !== "video/mp4" && true
+				);
 				this.props.fetchDataRedux(res);
 				console.log(res);
 			})

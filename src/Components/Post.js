@@ -27,19 +27,12 @@ class Post extends React.Component {
 		const img = `https://i.imgur.com/${post.id}.jpg`;
 		return (
 			<div className={postStyle}>
-				<Link to={`/posts/${post.id}`}>
+				<Link to={`/posts/${post.images[0].id}`}>
 					<Card>
 						<CardImg
 							top
 							width="100%"
-							src={
-								(post.images &&
-									(post.images[0].type === "video/mp4"
-										? img
-										: post.images[0].link)) ||
-								(post.type === "video/mp4" && img) ||
-								post.link
-							}
+							src={post.images[0].link}
 							alt="Card image cap"
 							style={{ maxHeight: "50vh" }}
 						/>
@@ -55,24 +48,6 @@ class Post extends React.Component {
 				</Link>
 			</div>
 		);
-		// return (
-		// 	<div className={postStyle}>
-		// 		<img
-		// 			src={
-		// 				(post.images &&
-		// 					(post.images[0].type === "video/mp4"
-		// 						? img
-		// 						: post.images[0].link)) ||
-		// 				(post.type === "video/mp4" && img) ||
-		// 				post.link
-		// 			}
-		// 			alt={post.title}
-		// 			height="100"
-		// 		/>
-		// 		<p>{post.title}</p>
-		// 		<p>Comments: {post.comment_count}</p>
-		// 	</div>
-		// );
 	}
 }
 
