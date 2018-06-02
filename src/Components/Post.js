@@ -1,13 +1,6 @@
 import React from "react";
 import { css } from "emotion";
-import {
-	Card,
-	CardBody,
-	Button,
-	CardTitle,
-	CardText,
-	CardImg
-} from "reactstrap";
+import { Card, CardBody, CardTitle, CardText, CardImg } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const postStyle = css({
@@ -24,7 +17,6 @@ const postStyle = css({
 class Post extends React.Component {
 	render() {
 		const { post } = this.props;
-		const img = `https://i.imgur.com/${post.id}.jpg`;
 		return (
 			<div className={postStyle}>
 				<Link to={`/posts/${post.images[0].id}`}>

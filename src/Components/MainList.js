@@ -4,13 +4,15 @@ import { withRouter } from "react-router-dom";
 import axios from "axios";
 import conf from "../Config";
 import Post from "./Post";
+import Header from "./MainListHeader";
 import { css } from "emotion";
 
 const mainStyle = css({
 	display: "flex",
 	justifyContent: "space-around",
 	alignItems: "stretch",
-	flexWrap: "wrap"
+	flexWrap: "wrap",
+	marginTop: "4em"
 });
 
 class MainList extends React.Component {
@@ -25,6 +27,7 @@ class MainList extends React.Component {
 		window.removeEventListener("scroll", this.infinityScroll.bind(this));
 	}
 	componentWillMount() {
+		console.log(1);
 		if (!this.props.datas.length) {
 			this.fetchData();
 		}
@@ -43,11 +46,13 @@ class MainList extends React.Component {
 						i.images && i.images[0] && i.images[0].type !== "video/mp4" && true
 				);
 				this.props.fetchDataRedux(res);
-				console.log(res);
 			})
 			.catch(function(error) {
 				console.log("Request failed", error);
 			});
+	}
+	componentWillReceiveProps(nextProps) {
+		// console.log(nextProps.filters, this.props.filters);
 	}
 	infinityScroll() {
 		// infinity scroll
@@ -71,13 +76,17 @@ class MainList extends React.Component {
 		}
 	}
 	render() {
-		let currentData = this.props.datas.slice(
-			0,
-			this.state.page * this.state.perPage
-		);
+		// console.log(this.props.datas);
+		let currentData =
+			(this.props.datas &&
+				this.props.datas.slice(0, this.state.page * this.state.perPage)) ||
+			[];
 		return (
-			<div className={mainStyle}>
-				{currentData.map(i => <Post post={i} key={i.id} />)}
+			<div>
+				<Header />
+				<div className={mainStyle}>
+					{currentData.map(i => <Post post={i} key={i.id} />)}
+				</div>
 			</div>
 		);
 	}

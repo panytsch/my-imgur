@@ -2,14 +2,7 @@ import React from "react";
 import axios from "axios";
 import PostPageStyle from "./PostPageStyle";
 import conf from "../Config";
-import {
-	Card,
-	CardImg,
-	CardText,
-	CardBody,
-	CardTitle,
-	CardSubtitle
-} from "reactstrap";
+import { Card, CardText, CardBody, CardTitle } from "reactstrap";
 
 class PostPage extends React.Component {
 	constructor(props) {
@@ -38,7 +31,7 @@ class PostPage extends React.Component {
 					<div>
 						<div>
 							<Card className="card">
-								<img width="100%" src={img.link} />
+								<img width="100%" src={img.link} alt={img.title} />
 								<CardBody>
 									<CardTitle>{img.title}</CardTitle>
 									<CardText>{`Views: ${img.views}`}</CardText>
