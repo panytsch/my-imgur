@@ -27,9 +27,20 @@ class MainList extends React.Component {
 		window.removeEventListener("scroll", this.infinityScroll.bind(this));
 	}
 	componentWillMount() {
-		console.log(1);
+		this.filters = Object.assign({}, this.props.filters || {});
+		console.log(
+			JSON.stringify(this.filters) === JSON.stringify(this.props.filters)
+		);
 		if (!this.props.datas.length) {
 			this.fetchData();
+		}
+	}
+	componentWillReceiveProps(nextProps) {
+		console.log("here");
+		if (JSON.stringify(this.filters) !== JSON.stringify(this.props.filters)) {
+			this.props.clearData();
+			this.fetchData();
+			this.filters = Object.assign({}, this.props.filters || {});
 		}
 	}
 	componentDidMount() {
@@ -51,9 +62,7 @@ class MainList extends React.Component {
 				console.log("Request failed", error);
 			});
 	}
-	componentWillReceiveProps(nextProps) {
-		// console.log(nextProps.filters, this.props.filters);
-	}
+
 	infinityScroll() {
 		// infinity scroll
 		let height = window.pageYOffset || document.documentElement.scrollTop;
@@ -83,7 +92,7 @@ class MainList extends React.Component {
 			[];
 		return (
 			<div>
-				<Header />
+				<Header handleChange={this.props.changeFilters} />
 				<div className={mainStyle}>
 					{currentData.map(i => <Post post={i} key={i.id} />)}
 				</div>
@@ -103,6 +112,11 @@ const mapDispatchToProps = dispatch => ({
 		return dispatch({
 			type: "CHANGE_FILTER",
 			filters: data
+		});
+	},
+	clearData: () => {
+		return dispatch({
+			type: "CLEAR_DATA"
 		});
 	}
 });

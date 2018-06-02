@@ -12,7 +12,8 @@ function galerryList(
 			state.data = state.data.concat(action.payload);
 			return { ...state };
 		case "CLEAR_DATA":
-			return [];
+			state.data = [];
+			return { ...state };
 		default:
 			return state;
 	}

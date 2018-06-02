@@ -21,13 +21,19 @@ const NavStyles = styled("nav")`
 `;
 class Header extends React.Component {
 	render() {
-		console.log(this.props);
 		return (
 			<div className={header}>
 				<NavStyles>
 					<li>
 						Section:{" "}
-						<select onChange={i => {}}>
+						<select
+							onChange={i => {
+								this.props.handleChange({
+									page: 1,
+									section: i.target.value
+								});
+							}}
+						>
 							<option value="hot">Hot</option>
 							<option value="top">Top</option>
 							<option value="user">User</option>
@@ -35,7 +41,14 @@ class Header extends React.Component {
 					</li>
 					<li>
 						Sort:{" "}
-						<select onChange={i => {}}>
+						<select
+							onChange={i => {
+								this.props.handleChange({
+									page: 1,
+									sort: i.target.value
+								});
+							}}
+						>
 							<option value="viral">Viral</option>
 							<option value="top">Top</option>
 							<option value="time">Time</option>
@@ -43,7 +56,14 @@ class Header extends React.Component {
 					</li>
 					<li>
 						Window:{" "}
-						<select onChange={i => {}}>
+						<select
+							onChange={i => {
+								this.props.handleChange({
+									page: 1,
+									__window: i.target.value
+								});
+							}}
+						>
 							<option value="day">Day</option>
 							<option value="top">Week</option>
 							<option value="month">Month</option>
