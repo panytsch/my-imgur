@@ -1,10 +1,12 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
-const init = {
-	data: []
-};
-function galerryList(state = init, action) {
+function galerryList(
+	state = {
+		data: []
+	},
+	action
+) {
 	switch (action.type) {
 		case "FETCH_DATA_SUCCESS":
 			state.data = state.data.concat(action.payload);

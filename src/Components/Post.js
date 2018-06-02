@@ -8,6 +8,7 @@ import {
 	CardText,
 	CardImg
 } from "reactstrap";
+import { Link } from "react-router-dom";
 
 const postStyle = css({
 	flexShrink: 1,
@@ -26,30 +27,32 @@ class Post extends React.Component {
 		const img = `https://i.imgur.com/${post.id}.jpg`;
 		return (
 			<div className={postStyle}>
-				<Card>
-					<CardImg
-						top
-						width="100%"
-						src={
-							(post.images &&
-								(post.images[0].type === "video/mp4"
-									? img
-									: post.images[0].link)) ||
-							(post.type === "video/mp4" && img) ||
-							post.link
-						}
-						alt="Card image cap"
-						style={{ maxHeight: "50vh" }}
-					/>
-					<CardBody>
-						<CardTitle>{post.title}</CardTitle>
-						<CardText>
-							<small className="text-muted">
-								Comments count: {post.comment_count}
-							</small>
-						</CardText>
-					</CardBody>
-				</Card>
+				<Link to={`/posts/${post.id}`}>
+					<Card>
+						<CardImg
+							top
+							width="100%"
+							src={
+								(post.images &&
+									(post.images[0].type === "video/mp4"
+										? img
+										: post.images[0].link)) ||
+								(post.type === "video/mp4" && img) ||
+								post.link
+							}
+							alt="Card image cap"
+							style={{ maxHeight: "50vh" }}
+						/>
+						<CardBody>
+							<CardTitle>{post.title}</CardTitle>
+							<CardText>
+								<small className="text-muted">
+									Comments count: {post.comment_count}
+								</small>
+							</CardText>
+						</CardBody>
+					</Card>
+				</Link>
 			</div>
 		);
 		// return (
