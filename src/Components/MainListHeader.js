@@ -1,11 +1,13 @@
 import styled, { css } from "react-emotion";
 import React from "react";
+import Option from "muicss/lib/react/option";
+import Select from "muicss/lib/react/select";
 
 const header = css({
 	position: "fixed",
 	top: 0,
 	width: "100%",
-	padding: "1em 4em",
+	padding: "0 4em",
 	margin: 0,
 	backgroundColor: "rgb(205, 186, 246)"
 });
@@ -25,51 +27,58 @@ class Header extends React.Component {
 			<div className={header}>
 				<NavStyles>
 					<li>
-						Section:{" "}
-						<select
-							onChange={i => {
-								this.props.handleChange({
-									page: 1,
-									section: i.target.value
-								});
-							}}
-						>
-							<option value="hot">Hot</option>
-							<option value="top">Top</option>
-							<option value="user">User</option>
-						</select>
+						<div className="mui-select">
+							<Select
+								label="Section"
+								onChange={i => {
+									this.props.handleChange({
+										page: 1,
+										section: i.target.value
+									});
+								}}
+							>
+								<Option value="hot" label="Hot" />
+								<Option value="top" label="Top" />
+								<Option value="user" label="User" />
+							</Select>
+						</div>
 					</li>
 					<li>
-						Sort:{" "}
-						<select
-							onChange={i => {
-								this.props.handleChange({
-									page: 1,
-									sort: i.target.value
-								});
-							}}
-						>
-							<option value="viral">Viral</option>
-							<option value="top">Top</option>
-							<option value="time">Time</option>
-						</select>
+						<div className="mui-select">
+							<Select
+								label="Sort"
+								onChange={i => {
+									this.props.handleChange({
+										page: 1,
+										sort: i.target.value
+									});
+								}}
+							>
+								<Option value="top" label="Top" />
+								<Option value="viral" label="Viral" />
+								<Option value="time" label="Time" />
+							</Select>
+						</div>
 					</li>
 					<li>
-						Window:{" "}
-						<select
-							onChange={i => {
-								this.props.handleChange({
-									page: 1,
-									__window: i.target.value
-								});
-							}}
-						>
-							<option value="day">Day</option>
-							<option value="top">Week</option>
-							<option value="month">Month</option>
-							<option value="year">Year</option>
-							<option value="all">All</option>
-						</select>
+						<div className="mui-select">
+							{" "}
+							<Select
+								label="Window"
+								onChange={i => {
+									this.props.handleChange({
+										page: 1,
+										__window: i.target.value
+									});
+								}}
+							>
+								<Option value="day" label="Day" />
+								<Option value="top" label="Week" />
+								<Option value="month" label="Month" />
+								<Option value="year" label="Year" />
+								<Option value="all" label="All" />
+							</Select>
+						</div>
 					</li>
 				</NavStyles>
 			</div>

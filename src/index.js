@@ -7,6 +7,7 @@ import MainList from "./Components/MainList";
 import store from "./Store/store";
 import PostPage from "./Components/PostPage";
 import "./reset.css";
+import "./styles/mui.css";
 
 ReactDOM.render(
 	<Provider store={store}>

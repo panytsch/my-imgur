@@ -19,7 +19,7 @@ class MainList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			perPage: 11,
+			perPage: 40,
 			page: 1
 		};
 	}
@@ -28,15 +28,11 @@ class MainList extends React.Component {
 	}
 	componentWillMount() {
 		this.filters = Object.assign({}, this.props.filters || {});
-		console.log(
-			JSON.stringify(this.filters) === JSON.stringify(this.props.filters)
-		);
 		if (!this.props.datas.length) {
 			this.fetchData();
 		}
 	}
 	componentWillReceiveProps(nextProps) {
-		console.log("here");
 		if (JSON.stringify(this.filters) !== JSON.stringify(this.props.filters)) {
 			this.props.clearData();
 			this.fetchData();
