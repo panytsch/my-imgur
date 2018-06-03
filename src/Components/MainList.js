@@ -27,36 +27,23 @@ class MainList extends React.Component {
 		window.removeEventListener("scroll", this.infinityScroll.bind(this));
 	}
 	componentWillMount() {
-		this.filters = Object.assign({}, this.props.filters || {});
+		// this.filters = Object.assign({}, this.props.filters || {});
 		if (!this.props.datas.length) {
-			this.fetchData();
+			this.props.fetchDataRedux();
 		}
 	}
 	componentWillReceiveProps(nextProps) {
-		if (JSON.stringify(this.filters) !== JSON.stringify(this.props.filters)) {
-			this.props.clearData();
-			this.fetchData();
-			this.filters = Object.assign({}, this.props.filters || {});
-		}
+		console.log(nextProps);
 	}
+	// componentWillReceiveProps(nextProps) {
+	// 	if (JSON.stringify(this.filters) !== JSON.stringify(this.props.filters)) {
+	// 		this.props.clearData();
+	// 		this.fetchData();
+	// 		this.filters = Object.assign({}, this.props.filters || {});
+	// 	}
+	// }
 	componentDidMount() {
 		window.addEventListener("scroll", this.infinityScroll.bind(this));
-	}
-
-	fetchData() {
-		let { page, section, sort, __window } = this.props.filters;
-		axios
-			.get(conf.url(page, section, sort, __window), conf.options)
-			.then(response => {
-				let res = response.data.data.filter(
-					i =>
-						i.images && i.images[0] && i.images[0].type !== "video/mp4" && true
-				);
-				this.props.fetchDataRedux(res);
-			})
-			.catch(function(error) {
-				console.log("Request failed", error);
-			});
 	}
 
 	infinityScroll() {
@@ -73,10 +60,8 @@ class MainList extends React.Component {
 				})
 			);
 			let { filters, changeFilters, datas } = this.props;
-			let reduxPage = filters.page + 1;
 			if (this.state.page * this.state.perPage >= datas.length) {
-				changeFilters(Object.assign(filters, { page: reduxPage }));
-				this.fetchData();
+				this.props.fetchDataRedux();
 			}
 		}
 	}
@@ -98,10 +83,9 @@ class MainList extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-	fetchDataRedux: data => {
+	fetchDataRedux: () => {
 		return dispatch({
-			type: "FETCH_DATA_SUCCESS",
-			payload: data
+			type: "FETCH_DATA_SUCCESS"
 		});
 	},
 	changeFilters: data => {
@@ -119,7 +103,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
 	datas: state.galerryList.data,
-	filters: state.galeryFilters
+	filters: state.galerryList.filters
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
